@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header {
+  background-color: white !important;
+  color: black !important;
+  border-bottom: 1px solid #f0f0f0;
+}

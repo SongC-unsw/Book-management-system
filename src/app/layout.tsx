@@ -10,66 +10,105 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
+import Image from "next/image";
 
 const { Header, Content, Sider } = Layout;
 
+// Navbar items
 const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
   key,
   label: `nav ${key}`,
 }));
 
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: Array.from({ length: 4 }).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+// Sidebar items
+const ITEMS = [
+  {
+    key: `book`,
+    // icon: React.createElement(UserOutlined),
+    label: `图书管理`,
+    children: [
+      {
+        key: `/book/list`,
+        label: `图书列表`,
+      },
+      {
+        key: `/book/add`,
+        label: `添加图书`,
+      },
+      {
+        key: `/book/edit`,
+        label: `编辑图书`,
+      },
+    ],
+  },
+  {
+    key: `borrow`,
+    // icon: React.createElement(UserOutlined),
+    label: `借阅管理`,
+    children: [
+      {
+        key: `/borrow/list`,
+        label: `借阅列表`,
+      },
+      {
+        key: `/borrow/add`,
+        label: `添加借阅`,
+      },
+    ],
+  },
+  {
+    key: `user`,
+    // icon: React.createElement(UserOutlined),
+    label: `用户管理`,
+    children: [
+      {
+        key: `/user/list`,
+        label: `用户列表`,
+      },
+      {
+        key: `/user/add`,
+        label: `添加用户`,
+      },
+    ],
+  },
+  {
+    key: `category`,
+    // icon: React.createElement(UserOutlined),
+    label: `分类管理`,
+    children: [
+      {
+        key: `/category/list`,
+        label: `分类列表`,
+      },
+      {
+        key: `/category/add`,
+        label: `添加分类`,
+      },
+    ],
+  },
+];
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
   return (
     <html lang="en">
       <body className="min-h-screen">
         <Layout style={{ minHeight: "100vh" }}>
-          <Header style={{ display: "flex", alignItems: "center" }}>
-            <div className="demo-logo" />
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={["2"]}
-              items={items1}
-              style={{ flex: 1, minWidth: 0 }}
-            />
+          <Header className="header flex items-center space-x-6">
+            <Image src="/logo.png" alt="logo" width={50} height={50} />
+            <div className="logo text-black">图书管理系统</div>
           </Header>
           <Layout>
-            <Sider width={200} style={{ background: colorBgContainer }}>
+            <Sider width={200}>
               <Menu
                 mode="inline"
                 defaultSelectedKeys={["1"]}
                 defaultOpenKeys={["sub1"]}
                 style={{ height: "100%", borderRight: 0 }}
-                items={items2}
+                items={ITEMS}
               />
             </Sider>
             <Layout style={{ padding: "0 24px 24px" }}>
@@ -82,8 +121,6 @@ export default function RootLayout({
                   padding: 24,
                   margin: 0,
                   minHeight: 280,
-                  background: colorBgContainer,
-                  borderRadius: borderRadiusLG,
                 }}
               >
                 <AntdRegistry>{children}</AntdRegistry>
