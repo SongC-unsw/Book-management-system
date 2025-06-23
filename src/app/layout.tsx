@@ -8,17 +8,11 @@ import {
   NotificationOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const { Header, Content, Sider } = Layout;
-
-// Navbar items
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
 
 // Sidebar items
 const ITEMS = [
@@ -93,6 +87,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+  const handleMenuClick = ({ key }: { key: string }) => {
+    router.push(key);
+  };
   return (
     <html lang="en">
       <body className="min-h-screen">
@@ -105,10 +103,11 @@ export default function RootLayout({
             <Sider width={200}>
               <Menu
                 mode="inline"
-                defaultSelectedKeys={["1"]}
-                defaultOpenKeys={["sub1"]}
+                defaultSelectedKeys={["/book/list"]}
+                defaultOpenKeys={["book"]}
                 style={{ height: "100%", borderRight: 0 }}
                 items={ITEMS}
+                onClick={handleMenuClick}
               />
             </Sider>
             <Layout style={{ padding: "0 24px 24px" }}>
