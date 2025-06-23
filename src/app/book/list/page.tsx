@@ -29,21 +29,101 @@ export default function Home() {
       age: 42,
       address: "西湖区湖底公园1号",
     },
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
   ];
 
   const columns = [
     {
-      title: "姓名",
+      title: "书名",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "年龄",
+      title: "封面",
       dataIndex: "age",
       key: "age",
     },
     {
-      title: "住址",
+      title: "作者",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "分类",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "描述",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "库存",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "创建时间",
       dataIndex: "address",
       key: "address",
     },
@@ -105,7 +185,7 @@ export default function Home() {
           </Col>
         </Row>
       </Form>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table dataSource={dataSource} columns={columns} scroll={{ x: 1000 }} />
     </>
   );
 }
