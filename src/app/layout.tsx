@@ -105,8 +105,8 @@ export default function RootLayout({
   };
   return (
     <html lang="en">
-      <body className="min-h-screen">
-        <Layout style={{ minHeight: "100vh" }}>
+      <body>
+        <Layout>
           <Header className="header flex items-center space-x-6">
             <Image src="/logo.png" alt="logo" width={50} height={50} />
             <div className="logo text-black">图书管理系统</div>
@@ -120,19 +120,19 @@ export default function RootLayout({
               </a>
             </Dropdown>
           </Header>
-          <Layout>
+          <Layout style={{ height: "calc(100vh - 64px)" }}>
             <Sider width={200}>
               <Menu
                 mode="inline"
                 defaultSelectedKeys={["/book/list"]}
                 defaultOpenKeys={["book"]}
-                style={{ height: "100%", borderRight: 0 }}
+                className="h-full"
                 items={ITEMS}
                 onClick={handleMenuClick}
               />
             </Sider>
-            <Layout className="bg-gray-100 p-[32px]">
-              <Content className="bg-white">
+            <Layout className="bg-gray-100 p-8">
+              <Content className="bg-white overflow-hidden">
                 <AntdRegistry>{children}</AntdRegistry>
               </Content>
             </Layout>
