@@ -132,7 +132,7 @@ export default function RootLayout({
               />
             </Sider>
             <Layout className="bg-gray-100 p-8">
-              <Content className="bg-white">
+              <Content className="bg-white rounded-[24px] p-8">
                 <AntdRegistry>{children}</AntdRegistry>
               </Content>
             </Layout>
