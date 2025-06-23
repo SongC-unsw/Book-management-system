@@ -1,57 +1,111 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Col, Form, Input, Row, Select, Space, Table } from "antd";
 
 export default function Home() {
+  const [form] = Form.useForm();
   const handleSearch = (values: any) => {
     console.log(values);
   };
-  const handleChange = (value: string) => {
+  const handleSelect = (value: string) => {
     console.log(`selected ${value}`);
   };
-  return (
-    <Form
-      name="customized_form_controls"
-      layout="inline"
-      onFinish={handleSearch}
-      initialValues={{
-        price: {
-          number: 0,
-          currency: "rmb",
-        },
-      }}
-    >
-      <Form.Item name="bookName" label="书名">
-        <Input />
-      </Form.Item>
-      <Form.Item name="year" label="年份">
-        <Input />
-      </Form.Item>
-      <Form.Item name="author" label="作者">
-        <Input />
-      </Form.Item>
-      <Form.Item name="category" label="分类">
-        <Select
-          defaultValue="1"
-          style={{ width: 120 }}
-          onChange={handleChange}
-          options={[
-            { value: "1", label: "1" },
-            { value: "2", label: "2" },
-            { value: "3", label: "3" },
-          ]}
-        />
-      </Form.Item>
+  const handleClear = () => {
+    form.resetFields();
+  };
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="mr-2">
-          清空
-        </Button>
-        <Button type="primary" htmlType="submit">
-          搜索
-        </Button>
-      </Form.Item>
-    </Form>
+  // dataSource
+  const dataSource = [
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+  ];
+
+  const columns = [
+    {
+      title: "姓名",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "年龄",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "住址",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+
+  return (
+    <>
+      <Form
+        name="search"
+        form={form}
+        // layout="horizontal"
+        onFinish={handleSearch}
+        initialValues={{
+          bookName: "",
+          author: "",
+          category: "1",
+        }}
+      >
+        <Row gutter={24}>
+          <Col span={5}>
+            <Form.Item name="bookName" label="书名">
+              <Input placeholder="请输入书名" allowClear />
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <Form.Item name="author" label="作者">
+              <Input placeholder="请输入作者" allowClear />
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <Form.Item name="category" label="分类">
+              <Select
+                showSearch
+                allowClear
+                onChange={handleSelect}
+                options={[
+                  { value: "1", label: "1" },
+                  { value: "2", label: "2" },
+                  { value: "3", label: "3" },
+                ]}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={9}>
+            <Form.Item>
+              <Space>
+                <Button
+                  htmlType="submit"
+                  className="mr-2"
+                  onClick={handleClear}
+                >
+                  清空
+                </Button>
+                <Button type="primary" htmlType="submit">
+                  搜索
+                </Button>
+              </Space>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+      <Table dataSource={dataSource} columns={columns} />
+    </>
   );
 }
