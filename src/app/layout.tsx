@@ -8,9 +8,10 @@ import {
   NotificationOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, Dropdown, Space } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { DownOutlined } from "@ant-design/icons";
 
 const { Header, Content, Sider } = Layout;
 
@@ -82,6 +83,52 @@ const ITEMS = [
   },
 ];
 
+const DROPDOWN_ITEMS = [
+  {
+    key: `/user/profile`,
+    label: `个人中心`,
+  },
+  {
+    key: `/user/logout`,
+    label: `退出登录`,
+  },
+];
+
+const items: MenuProps["items"] = [
+  {
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.antgroup.com"
+      >
+        1st menu item
+      </a>
+    ),
+    key: "0",
+  },
+  {
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.aliyun.com"
+      >
+        2nd menu item
+      </a>
+    ),
+    key: "1",
+  },
+  {
+    type: "divider",
+  },
+  {
+    label: "3rd menu item（disabled）",
+    key: "3",
+    disabled: true,
+  },
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -98,6 +145,15 @@ export default function RootLayout({
           <Header className="header flex items-center space-x-6">
             <Image src="/logo.png" alt="logo" width={50} height={50} />
             <div className="logo text-black">图书管理系统</div>
+            <Dropdown menu={{ items: DROPDOWN_ITEMS }} className="ml-auto">
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <UserOutlined />
+                  <span>Admin</span>
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
           </Header>
           <Layout>
             <Sider width={200}>
