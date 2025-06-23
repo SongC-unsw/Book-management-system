@@ -131,18 +131,8 @@ export default function RootLayout({
                 onClick={handleMenuClick}
               />
             </Sider>
-            <Layout style={{ padding: "0 24px 24px" }}>
-              <Breadcrumb
-                items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
-                style={{ margin: "16px 0" }}
-              />
-              <Content
-                style={{
-                  padding: 24,
-                  margin: 0,
-                  minHeight: 280,
-                }}
-              >
+            <Layout className="bg-gray-100 p-[32px]">
+              <Content className="bg-white">
                 <AntdRegistry>{children}</AntdRegistry>
               </Content>
             </Layout>
