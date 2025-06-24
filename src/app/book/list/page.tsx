@@ -1,10 +1,33 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
-import { Button, Col, Form, Input, Row, Select, Space, Table } from "antd";
+import { useState, useEffect } from "react";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Table,
+  TablePaginationConfig,
+} from "antd";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Home() {
+  const [dataSource, setDataSource] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        "https://mock.apifox.cn/m1/2398938-0-default/api/books"
+      );
+      const data = result.data.data;
+      console.log(data);
+      setDataSource(data);
+    };
+    fetchData();
+  }, []);
   const [form] = Form.useForm();
   const router = useRouter();
   const handleSearch = (values: any) => {
@@ -17,81 +40,94 @@ export default function Home() {
     form.resetFields();
   };
 
+  // pagination
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    showSizeChanger: true,
+    total: 0,
+  });
+
+  const handlePageChange = (pagination: TablePaginationConfig) => {
+    console.log(pagination);
+    setPagination(pagination as any);
+  };
+
   // dataSource
-  const dataSource = [
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-  ];
+  // const dataSource = [
+  //   {
+  //     key: "1",
+  //     name: "胡彦斌",
+  //     age: 32,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "胡彦祖",
+  //     age: 42,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "1",
+  //     name: "胡彦斌",
+  //     age: 32,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "胡彦祖",
+  //     age: 42,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "1",
+  //     name: "胡彦斌",
+  //     age: 32,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "胡彦祖",
+  //     age: 42,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "1",
+  //     name: "胡彦斌",
+  //     age: 32,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "胡彦祖",
+  //     age: 42,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "1",
+  //     name: "胡彦斌",
+  //     age: 32,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "胡彦祖",
+  //     age: 42,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "1",
+  //     name: "胡彦斌",
+  //     age: 32,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "胡彦祖",
+  //     age: 42,
+  //     address: "西湖区湖底公园1号",
+  //   },
+  // ];
 
   const COLUMNS = [
     {
@@ -101,33 +137,39 @@ export default function Home() {
     },
     {
       title: "封面",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "cover",
+      key: "cover",
+      render: (text: string) => {
+        return <Image src={text} alt="cover" width={100} height={100} />;
+      },
     },
     {
       title: "作者",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "author",
+      key: "author",
     },
     {
       title: "分类",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "category",
+      key: "category",
     },
     {
       title: "描述",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "库存",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "stock",
+      key: "stock",
     },
     {
       title: "创建时间",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text: number) => {
+        return new Date(text).toLocaleDateString();
+      },
     },
   ];
 
@@ -205,7 +247,7 @@ export default function Home() {
                 >
                   清空
                 </Button>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="button">
                   搜索
                 </Button>
               </Space>
@@ -213,7 +255,18 @@ export default function Home() {
           </Col>
         </Row>
       </Form>
-      <Table dataSource={dataSource} columns={columns} scroll={{ x: 1000 }} />
+      <div className="overflow-auto" style={{ height: "calc(100% - 100px)" }}>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          scroll={{ x: 1000 }}
+          onChange={handlePageChange}
+          pagination={{
+            ...pagination,
+            showTotal: () => `共 ${pagination.total} 条`,
+          }}
+        />
+      </div>
     </>
   );
 }
