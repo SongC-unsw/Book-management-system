@@ -16,41 +16,70 @@ import {
   Tooltip,
 } from "antd";
 import { useRouter } from "next/navigation";
+import { BookQueryType } from "@/app/type/book";
 
 export default function Home() {
   const [dataSource, setDataSource] = useState([]);
+  // fetch data when the page is loaded
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getBooks();
-      console.log(res);
-      setDataSource(res);
+      const res = await getBooks({ current: 1, pageSize: 10 });
+      console.log(res.data);
+      setDataSource(res.data);
     };
     fetchData();
   }, []);
   const [form] = Form.useForm();
   const router = useRouter();
-  const handleSearch = (values: any) => {
-    console.log("Searching...");
-    getBooks(values);
-  };
-  const handleSelect = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-  const handleClear = () => {
-    form.resetFields();
-  };
-
   // pagination
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<TablePaginationConfig>({
     current: 1,
     pageSize: 10,
     showSizeChanger: true,
     total: 0,
   });
+  const handleSearch = async (values: BookQueryType) => {
+    console.log("Searching...");
+    const res = await getBooks({
+      ...values,
+      current: 1,
+      pageSize: pagination.pageSize,
+    });
+    setDataSource(res.data);
+    setPagination({
+      current: 1,
+      pageSize: pagination.pageSize,
+      showSizeChanger: true,
+      total: res.total,
+    });
+  };
+  // handle Select category
+  const handleSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+  // handle Clearing the input form
+  const handleClear = () => {
+    form.resetFields();
+  };
 
+  const handleEdit = () => {
+    router.push("/book/edit/id");
+  };
+  const handleDelete = () => {
+    console.log("delete");
+  };
+
+  // handle changes in pagination size(xx items per page)
   const handlePageChange = (pagination: TablePaginationConfig) => {
     console.log(pagination);
     setPagination(pagination as any);
+    const query = form.getFieldsValue();
+    getBooks({
+      ...query,
+      current: pagination.current,
+      pageSize: pagination.pageSize,
+    });
+    console.log(query);
   };
 
   const COLUMNS = [
@@ -119,13 +148,6 @@ export default function Home() {
       },
     },
   ];
-
-  const handleEdit = () => {
-    router.push("/book/edit/id");
-  };
-  const handleDelete = () => {
-    console.log("delete");
-  };
 
   const columns = [
     ...COLUMNS,
