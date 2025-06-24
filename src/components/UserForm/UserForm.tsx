@@ -41,7 +41,7 @@ export default function BookForm() {
           name="username"
           rules={[{ required: true, message: "请输入用户名" }]}
         >
-          <Input placeholder="请输入用户名" />
+          <Input placeholder="请输入用户名" type="username" />
         </Form.Item>
         <Form.Item
           label="密码"

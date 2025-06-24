@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, Dropdown, Space } from "antd";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { DownOutlined } from "@ant-design/icons";
 
 const { Header, Content, Sider } = Layout;
@@ -42,10 +42,6 @@ const ITEMS = [
     label: `用户管理`,
     children: [
       {
-        key: `/user/list`,
-        label: `用户列表`,
-      },
-      {
         key: `/user/add`,
         label: `添加用户`,
       },
@@ -70,44 +66,50 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isLogin = pathname.includes("/login");
   const handleMenuClick = ({ key }: { key: string }) => {
     router.push(key);
   };
   return (
     <html lang="en">
       <body>
-        <Layout>
-          <Header className="header flex items-center space-x-6">
-            <Image src="/logo.png" alt="logo" width={50} height={50} />
-            <div className="logo text-black">图书管理系统</div>
-            <Dropdown menu={{ items: DROPDOWN_ITEMS }} className="ml-auto">
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  <UserOutlined />
-                  <span>Admin</span>
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-          </Header>
-          <Layout style={{ height: "calc(100vh - 64px)" }}>
-            <Sider width={200}>
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={["/book/list"]}
-                defaultOpenKeys={["book"]}
-                className="h-full"
-                items={ITEMS}
-                onClick={handleMenuClick}
-              />
-            </Sider>
-            <Layout className="bg-gray-100 p-8">
-              <Content className="bg-white rounded-[16px] p-8">
-                <AntdRegistry>{children}</AntdRegistry>
-              </Content>
+        {isLogin ? (
+          <div>{children}</div>
+        ) : (
+          <Layout>
+            <Header className="header flex items-center space-x-6">
+              <Image src="/logo.png" alt="logo" width={50} height={50} />
+              <div className="logo text-black">图书管理系统</div>
+              <Dropdown menu={{ items: DROPDOWN_ITEMS }} className="ml-auto">
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <UserOutlined />
+                    <span>Admin</span>
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            </Header>
+            <Layout style={{ height: "calc(100vh - 64px)" }}>
+              <Sider width={200}>
+                <Menu
+                  mode="inline"
+                  defaultSelectedKeys={["/book/list"]}
+                  defaultOpenKeys={["book"]}
+                  className="h-full"
+                  items={ITEMS}
+                  onClick={handleMenuClick}
+                />
+              </Sider>
+              <Layout className="bg-gray-100 p-8">
+                <Content className="bg-white rounded-[16px] p-8">
+                  <AntdRegistry>{children}</AntdRegistry>
+                </Content>
+              </Layout>
             </Layout>
           </Layout>
-        </Layout>
+        )}
       </body>
     </html>
   );
