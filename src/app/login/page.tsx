@@ -1,15 +1,26 @@
 // booksys/src/app/login/page.tsx
 "use client";
-import React from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { message } from "antd";
-import request from "@/app/utils/request";
+import axios from "axios";
 export default function LoginPage() {
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const apiURL = "http://localhost:8080/api/v1/login";
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    console.log(res);
+    const res = await axios.post(apiURL, {
+      username,
+      password,
+    });
+    if (res.status === 200) {
+      message.success("登录成功");
+      router.push("/");
+    } else {
+      message.error("登录失败");
+    }
   };
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -19,13 +30,19 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-1">用户名</label>
-            <input className="w-full border rounded px-3 py-2" />
+            <input
+              className="w-full border rounded px-3 py-2"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
           <div className="mb-6">
             <label className="block mb-1">密码</label>
             <input
               type="password"
               className="w-full border rounded px-3 py-2"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button
