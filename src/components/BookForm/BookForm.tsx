@@ -7,29 +7,24 @@ import {
   InputNumber,
   Select,
   Image,
+  message,
 } from "antd";
 import { useState } from "react";
-
-const { RangePicker } = DatePicker;
+import { bookAdd } from "@/app/api/book";
+import { BookType } from "@/app/type/book";
+import { useRouter } from "next/navigation";
 const { TextArea } = Input;
-
-const normFile = (e: any) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 
 export default function BookForm() {
   const [form] = Form.useForm();
-
+  const router = useRouter();
   const [coverPreview, setCoverPreview] = useState("");
 
-  const handleSubmit = (values: any) => {
-    console.log(values);
-  };
-
-  const handleClear = () => {
+  const handleSubmit = async (values: BookType) => {
+    await bookAdd(values);
+    message.success("添加成功");
+    router.push("/book/list");
+    form.resetFields();
     setCoverPreview("");
   };
 
@@ -38,9 +33,9 @@ export default function BookForm() {
       <Form
         form={form}
         labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        wrapperCol={{ span: 20 }}
         layout="horizontal"
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 600, marginTop: "50px" }}
         onFinish={handleSubmit}
       >
         <Form.Item
@@ -100,12 +95,13 @@ export default function BookForm() {
           <TextArea rows={4} placeholder="请输入描述" />
         </Form.Item>
         <Form.Item>
-          <div className="flex justify-end gap-5">
-            <Button type="primary" htmlType="submit">
-              提交
-            </Button>
-            <Button>取消</Button>
-          </div>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ marginLeft: "50%" }}
+          >
+            提交
+          </Button>
         </Form.Item>
       </Form>
     </>

@@ -5,3 +5,13 @@ export interface BookQueryType {
   current?: number;
   pageSize?: number;
 }
+
+export interface BookType {
+  bookName: string;
+  author: string;
+  category: string;
+  cover: string;
+  publishAt: string;
+  stock: number;
+  description: string;
+}
