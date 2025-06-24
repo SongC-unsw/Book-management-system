@@ -13,9 +13,9 @@ A modern, full-stack book management system built with Next.js, TypeScript, and 
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: AntD Design, Tailwind CSS
 - **Linting**: ESLint
 - **Package Manager**: npm
 
