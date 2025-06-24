@@ -1,5 +1,4 @@
 "use client";
-import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   DatePicker,
@@ -7,9 +6,9 @@ import {
   Input,
   InputNumber,
   Select,
-  Upload,
-  Space,
+  Image,
 } from "antd";
+import { useState } from "react";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -22,13 +21,27 @@ const normFile = (e: any) => {
 };
 
 export default function BookForm() {
+  const [form] = Form.useForm();
+
+  const [coverPreview, setCoverPreview] = useState("");
+
+  const handleSubmit = (values: any) => {
+    console.log(values);
+  };
+
+  const handleClear = () => {
+    setCoverPreview("");
+  };
+
   return (
     <>
       <Form
+        form={form}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         style={{ maxWidth: 600 }}
+        onFinish={handleSubmit}
       >
         <Form.Item
           label="书名"
@@ -54,14 +67,29 @@ export default function BookForm() {
           </Select>
         </Form.Item>
         <Form.Item label="封面" name="cover">
-          <Input.Group compact>
-            <Input
-              placeholder="请输入封面链接"
-              style={{ width: "calc(100% - 100px)" }}
-            />
-            <Button type="primary">预览</Button>
-          </Input.Group>
+          <div className="flex gap-2">
+            <Input placeholder="请输入封面链接" />
+            <Button
+              type="primary"
+              onClick={() => {
+                const coverValue = form.getFieldValue("cover");
+                setCoverPreview(coverValue);
+              }}
+            >
+              预览
+            </Button>
+          </div>
         </Form.Item>
+        {coverPreview && (
+          <Form.Item label="封面预览">
+            <Image
+              src={coverPreview}
+              alt="cover-preview"
+              preview={true}
+              className="w-full h-full object-contain"
+            />
+          </Form.Item>
+        )}
         <Form.Item label="出版日期" name="publishAt">
           <DatePicker placeholder="请选择出版日期" />
         </Form.Item>
@@ -73,7 +101,9 @@ export default function BookForm() {
         </Form.Item>
         <Form.Item>
           <div className="flex justify-end gap-5">
-            <Button type="primary">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
             <Button>取消</Button>
           </div>
         </Form.Item>
