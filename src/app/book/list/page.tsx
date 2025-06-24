@@ -17,6 +17,7 @@ import {
 } from "antd";
 import { useRouter } from "next/navigation";
 import { BookQueryType } from "@/app/type/book";
+import Header from "@/components/Header/Header";
 
 export default function Home() {
   const [dataSource, setDataSource] = useState([]);
@@ -173,6 +174,7 @@ export default function Home() {
   ];
   return (
     <>
+      <Header value="图书列表" api="/book/add" buttonName="添加" />
       <Form
         name="search"
         form={form}
