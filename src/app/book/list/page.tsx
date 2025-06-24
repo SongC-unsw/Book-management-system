@@ -23,9 +23,12 @@ export default function Home() {
   // fetch data when the page is loaded
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getBooks({ current: 1, pageSize: 10 });
-      console.log(res.data);
-      setDataSource(res.data);
+      const res = await getBooks({
+        current: 1,
+        pageSize: pagination.pageSize,
+      });
+      console.log(res);
+      setDataSource(res);
     };
     fetchData();
   }, []);
