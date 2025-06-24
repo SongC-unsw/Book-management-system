@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import {
   Button,
@@ -11,6 +12,7 @@ import {
   Space,
   Table,
   TablePaginationConfig,
+  Tooltip,
 } from "antd";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -53,122 +55,69 @@ export default function Home() {
     setPagination(pagination as any);
   };
 
-  // dataSource
-  // const dataSource = [
-  //   {
-  //     key: "1",
-  //     name: "胡彦斌",
-  //     age: 32,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "胡彦祖",
-  //     age: 42,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "1",
-  //     name: "胡彦斌",
-  //     age: 32,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "胡彦祖",
-  //     age: 42,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "1",
-  //     name: "胡彦斌",
-  //     age: 32,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "胡彦祖",
-  //     age: 42,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "1",
-  //     name: "胡彦斌",
-  //     age: 32,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "胡彦祖",
-  //     age: 42,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "1",
-  //     name: "胡彦斌",
-  //     age: 32,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "胡彦祖",
-  //     age: 42,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "1",
-  //     name: "胡彦斌",
-  //     age: 32,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "胡彦祖",
-  //     age: 42,
-  //     address: "西湖区湖底公园1号",
-  //   },
-  // ];
-
   const COLUMNS = [
     {
       title: "书名",
       dataIndex: "name",
       key: "name",
+      width: 200,
     },
     {
       title: "封面",
       dataIndex: "cover",
       key: "cover",
+      width: 100,
       render: (text: string) => {
-        return <Image src={text} alt="cover" width={100} height={100} />;
+        return (
+          <Image
+            src={text}
+            alt="Book cover"
+            width={60}
+            height={80}
+            style={{ objectFit: "cover" }}
+          />
+        );
       },
     },
     {
       title: "作者",
       dataIndex: "author",
       key: "author",
+      width: 120,
     },
     {
       title: "分类",
       dataIndex: "category",
       key: "category",
+      width: 80,
     },
     {
       title: "描述",
       dataIndex: "description",
       key: "description",
+      ellipsis: true,
+      width: 300,
+      render: (text: string) => {
+        return (
+          <Tooltip title={text} placement="topLeft">
+            {text}
+          </Tooltip>
+        );
+      },
     },
     {
       title: "库存",
       dataIndex: "stock",
       key: "stock",
+      width: 80,
     },
     {
       title: "创建时间",
       dataIndex: "createdAt",
       key: "createdAt",
+      width: 120,
       render: (text: number) => {
-        return new Date(text).toLocaleDateString();
+        return dayjs(text).format("YYYY年MM月DD日");
       },
     },
   ];
