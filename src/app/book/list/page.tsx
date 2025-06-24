@@ -16,7 +16,6 @@ import {
   Tooltip,
 } from "antd";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 export default function Home() {
   const [dataSource, setDataSource] = useState([]);
@@ -24,14 +23,15 @@ export default function Home() {
     const fetchData = async () => {
       const res = await getBooks();
       console.log(res);
-      setDataSource(res.data);
+      setDataSource(res);
     };
     fetchData();
   }, []);
   const [form] = Form.useForm();
   const router = useRouter();
   const handleSearch = (values: any) => {
-    console.log(values);
+    console.log("Searching...");
+    getBooks(values);
   };
   const handleSelect = (value: string) => {
     console.log(`selected ${value}`);
@@ -188,13 +188,13 @@ export default function Home() {
             <Form.Item>
               <Space>
                 <Button
-                  htmlType="submit"
+                  htmlType="button"
                   className="mr-2"
                   onClick={handleClear}
                 >
                   清空
                 </Button>
-                <Button type="primary" htmlType="button">
+                <Button type="primary" htmlType="submit">
                   搜索
                 </Button>
               </Space>
