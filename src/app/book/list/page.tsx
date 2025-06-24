@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { getBooks } from "@/app/api/book";
 import { useState, useEffect } from "react";
 import {
   Button,
@@ -21,12 +22,9 @@ export default function Home() {
   const [dataSource, setDataSource] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(
-        "https://mock.apifox.cn/m1/2398938-0-default/api/books"
-      );
-      const data = result.data.data;
-      console.log(data);
-      setDataSource(data);
+      const res = await getBooks();
+      console.log(res);
+      setDataSource(res.data);
     };
     fetchData();
   }, []);
