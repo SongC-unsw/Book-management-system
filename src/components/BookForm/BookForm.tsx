@@ -54,7 +54,13 @@ export default function BookForm() {
           </Select>
         </Form.Item>
         <Form.Item label="封面" name="cover">
-          <Input />
+          <Input.Group compact>
+            <Input
+              placeholder="请输入封面链接"
+              style={{ width: "calc(100% - 100px)" }}
+            />
+            <Button>预览</Button>
+          </Input.Group>
         </Form.Item>
         <Form.Item label="出版日期" name="publishAt">
           <DatePicker placeholder="请选择出版日期" />
@@ -64,26 +70,6 @@ export default function BookForm() {
         </Form.Item>
         <Form.Item label="描述" name="description">
           <TextArea rows={4} placeholder="请输入描述" />
-        </Form.Item>
-        <Form.Item
-          label="上传封面"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <Upload action="/upload.do" listType="picture-card">
-            <button
-              style={{
-                color: "inherit",
-                cursor: "inherit",
-                border: 0,
-                background: "none",
-              }}
-              type="button"
-            >
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </button>
-          </Upload>
         </Form.Item>
         <Form.Item>
           <div className="flex justify-end gap-5">
