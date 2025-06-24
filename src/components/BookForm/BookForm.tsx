@@ -59,7 +59,7 @@ export default function BookForm() {
               placeholder="请输入封面链接"
               style={{ width: "calc(100% - 100px)" }}
             />
-            <Button>预览</Button>
+            <Button type="primary">预览</Button>
           </Input.Group>
         </Form.Item>
         <Form.Item label="出版日期" name="publishAt">
