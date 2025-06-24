@@ -13,6 +13,7 @@ import { useState } from "react";
 import { bookAdd } from "@/app/api/book";
 import { BookType } from "@/app/type/book";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 const { TextArea } = Input;
 
 export default function BookForm() {
@@ -21,6 +22,9 @@ export default function BookForm() {
   const [coverPreview, setCoverPreview] = useState("");
 
   const handleSubmit = async (values: BookType) => {
+    if (values.publishAt) {
+      values.publishAt = dayjs(values.publishAt).valueOf();
+    }
     await bookAdd(values);
     message.success("添加成功");
     router.push("/book/list");

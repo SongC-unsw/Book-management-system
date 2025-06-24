@@ -11,7 +11,7 @@ export interface BookType {
   author: string;
   category: string;
   cover: string;
-  publishAt: string;
+  publishAt: any;
   stock: number;
   description: string;
 }
