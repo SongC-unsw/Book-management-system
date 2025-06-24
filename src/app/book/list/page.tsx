@@ -2,9 +2,11 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button, Col, Form, Input, Row, Select, Space, Table } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [form] = Form.useForm();
+  const router = useRouter();
   const handleSearch = (values: any) => {
     console.log(values);
   };
@@ -91,7 +93,7 @@ export default function Home() {
     },
   ];
 
-  const columns = [
+  const COLUMNS = [
     {
       title: "书名",
       dataIndex: "name",
@@ -129,6 +131,32 @@ export default function Home() {
     },
   ];
 
+  const handleEdit = () => {
+    router.push("/book/edit/id");
+  };
+  const handleDelete = () => {
+    console.log("delete");
+  };
+
+  const columns = [
+    ...COLUMNS,
+    {
+      title: "操作",
+      key: "action",
+      render: (_: string, row: any) => {
+        return (
+          <>
+            <Button type="link" onClick={handleEdit}>
+              编辑
+            </Button>
+            <Button type="link" danger onClick={handleDelete}>
+              删除
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
   return (
     <>
       <Form
