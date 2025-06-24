@@ -37,21 +37,6 @@ const ITEMS = [
     ],
   },
   {
-    key: `borrow`,
-    // icon: React.createElement(UserOutlined),
-    label: `借阅管理`,
-    children: [
-      {
-        key: `/borrow/list`,
-        label: `借阅列表`,
-      },
-      {
-        key: `/borrow/add`,
-        label: `添加借阅`,
-      },
-    ],
-  },
-  {
     key: `user`,
     // icon: React.createElement(UserOutlined),
     label: `用户管理`,
@@ -63,21 +48,6 @@ const ITEMS = [
       {
         key: `/user/add`,
         label: `添加用户`,
-      },
-    ],
-  },
-  {
-    key: `category`,
-    // icon: React.createElement(UserOutlined),
-    label: `分类管理`,
-    children: [
-      {
-        key: `/category/list`,
-        label: `分类列表`,
-      },
-      {
-        key: `/category/add`,
-        label: `添加分类`,
       },
     ],
   },

@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { BookQueryType, BookType } from "../type/book";
+import { BookQueryType, BookType, UserType } from "../type/book";
 import request from "../utils/request";
 const baseUrl = "https://mock.apifox.cn/m1/2398938-0-default/api";
 
@@ -13,6 +13,11 @@ export const getBooks = async (params?: BookQueryType) => {
 
 export const bookAdd = async (data: BookType) => {
   const result = await request.post(`${baseUrl}/books`, data);
+  const res = result.data;
+  return res;
+};
+export const userAdd = async (data: UserType) => {
+  const result = await request.post(`${baseUrl}/user/add`, data);
   const res = result.data;
   return res;
 };

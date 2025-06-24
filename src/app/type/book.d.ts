@@ -15,3 +15,11 @@ export interface BookType {
   stock: number;
   description: string;
 }
+export interface UserType {
+  bookName: string;
+  author: string;
+  category: string;
+  email: string;
+  gender: string;
+  role: number;
+}
